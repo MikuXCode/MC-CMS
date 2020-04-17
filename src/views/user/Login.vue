@@ -1,165 +1,177 @@
 <template>
-  <a-form
-    id="formLogin"
-    :form="form"
-    class="user-layout-login"
-    @submit="handleSubmit"
-  >
-    <a-tabs
-      :activeKey="customActiveKey"
-      :tabBarStyle="{ textAlign: 'center', borderBottonm: 'unset' }"
-      @change="handleTabClick"
+  <a-card class="main">
+    <a-form
+      id="formLogin"
+      :form="form"
+      class="user-layout-login"
+      @submit="handleSubmit"
     >
-      <!-- 账号密码登录 -->
-      <a-tab-pane tab="账号密码登录" key="tab1">
-        <a-alert
-          v-if="isLoginError"
-          type="error"
-          showIcon
-          style="margin-bottom: 24px;"
-          message="账户或密码错误"
-        />
-        <a-form-item>
-          <a-input
-            v-decorator="[
-              'userName',
-              {
-                rules: [
-                  { required: true, message: '请输入帐户名或邮箱地址!' },
-                  { validator: handleUsernameOrEmail }
-                ],
-                validateTrigger: 'change'
-              }
-            ]"
-            type="text"
-            placeholder="账户: admin"
-          >
-            <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
-        <a-form-item>
-          <a-input
-            v-decorator="[
-              'password',
-              {
-                rules: [{ required: true, message: '请输入密码!' }],
-                validateTrigger: 'blur'
-              }
-            ]"
-            type="password"
-            placeholder="密码: admin"
-          >
-            <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-          </a-input>
-        </a-form-item>
-      </a-tab-pane>
-
-      <!-- 手机号登录 -->
-      <a-tab-pane tab="手机号登录" key="tab2">
-        <a-form-item>
-          <a-input
-            v-decorator="[
-              'mobile',
-              {
-                rules: [
-                  {
-                    required: true,
-                    pattern: /^1[34578]\d{9}$/,
-                    message: '请输入手机号!'
-                  }
-                ],
-                validateTrigger: 'change'
-              }
-            ]"
-            type="text"
-            placeholder="手机号"
-          >
-            <a-icon
-              slot="prefix"
-              type="mobile"
-              style="color: rgba(0,0,0,.25)"
-            />
-          </a-input>
-        </a-form-item>
-
-        <a-row :gutter="16">
-          <a-col class="gutter-row" :span="16">
-            <a-form-item>
-              <a-input
-                type="text"
-                placeholder="验证码"
-                v-decorator="[
-                  'captcha',
-                  {
-                    rules: [{ required: true, message: '请输入验证码' }],
-                    validateTrigger: 'blur'
-                  }
-                ]"
-              >
-                <a-icon
-                  slot="prefix"
-                  type="mail"
-                  :style="{ color: 'rgba(0,0,0,.25)' }"
-                />
-              </a-input>
-            </a-form-item>
-          </a-col>
-          <a-col class="gutter-row" :span="8">
-            <a-button
-              class="getCaptcha"
-              tabindex="-1"
-              :disabled="state.smsSendBtn"
-              @click.stop.prevent="getCaptcha"
-              v-text="(!state.smsSendBtn && '获取验证码') || state.time + ' s'"
-            />
-          </a-col>
-        </a-row>
-      </a-tab-pane>
-    </a-tabs>
-
-    <!-- CheckBox -->
-    <a-form-item>
-      <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">
-        自动登录
-      </a-checkbox>
-      <router-link
-        :to="{ name: 'recover', params: { user: 'aaa' } }"
-        class="forge-password"
-        style="float: right;"
+      <a-tabs
+        :activeKey="customActiveKey"
+        :tabBarStyle="{ textAlign: 'center', borderBottonm: 'unset' }"
+        @change="handleTabClick"
       >
-        忘记密码
-      </router-link>
-    </a-form-item>
+        <!-- 账号密码登录 -->
+        <a-tab-pane tab="账号密码登录" key="tab1">
+          <a-alert
+            v-if="isLoginError"
+            type="error"
+            showIcon
+            style="margin-bottom: 24px;"
+            message="账户或密码错误"
+          />
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'userName',
+                {
+                  rules: [
+                    { required: true, message: '请输入帐户名或邮箱地址!' },
+                    { validator: handleUsernameOrEmail }
+                  ],
+                  validateTrigger: 'change'
+                }
+              ]"
+              type="text"
+              placeholder="账户: admin"
+            >
+              <a-icon
+                slot="prefix"
+                type="user"
+                style="color: rgba(0,0,0,.25)"
+              />
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'password',
+                {
+                  rules: [{ required: true, message: '请输入密码!' }],
+                  validateTrigger: 'blur'
+                }
+              ]"
+              type="password"
+              placeholder="密码: admin"
+            >
+              <a-icon
+                slot="prefix"
+                type="lock"
+                style="color: rgba(0,0,0,.25)"
+              />
+            </a-input>
+          </a-form-item>
+        </a-tab-pane>
 
-    <a-form-item style="margin-top:24px">
-      <a-button
-        size="large"
-        type="primary"
-        htmlType="submit"
-        class="login-button"
-        :loading="state.loginBtn"
-        :disabled="state.loginBtn"
-      >
-        确定
-      </a-button>
-    </a-form-item>
+        <!-- 手机号登录 -->
+        <a-tab-pane tab="手机号登录" key="tab2">
+          <a-form-item>
+            <a-input
+              v-decorator="[
+                'mobile',
+                {
+                  rules: [
+                    {
+                      required: true,
+                      pattern: /^1[34578]\d{9}$/,
+                      message: '请输入手机号!'
+                    }
+                  ],
+                  validateTrigger: 'change'
+                }
+              ]"
+              type="text"
+              placeholder="手机号"
+            >
+              <a-icon
+                slot="prefix"
+                type="mobile"
+                style="color: rgba(0,0,0,.25)"
+              />
+            </a-input>
+          </a-form-item>
 
-    <div class="user-login-other">
-      <span>其他登录方式</span>
-      <a>
-        <a-icon class="item-icon" type="alipay-circle"></a-icon>
-      </a>
-      <a>
-        <a-icon class="item-icon" type="taobao-circle"></a-icon>
-      </a>
-      <a>
-        <a-icon class="item-icon" type="weibo-circle"></a-icon>
-      </a>
-      <router-link class="register" :to="{ name: 'register' }">
-        注册账户
-      </router-link>
-    </div>
-  </a-form>
+          <a-row :gutter="16">
+            <a-col class="gutter-row" :span="16">
+              <a-form-item>
+                <a-input
+                  type="text"
+                  placeholder="验证码"
+                  v-decorator="[
+                    'captcha',
+                    {
+                      rules: [{ required: true, message: '请输入验证码' }],
+                      validateTrigger: 'blur'
+                    }
+                  ]"
+                >
+                  <a-icon
+                    slot="prefix"
+                    type="mail"
+                    :style="{ color: 'rgba(0,0,0,.25)' }"
+                  />
+                </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col class="gutter-row" :span="8">
+              <a-button
+                class="getCaptcha"
+                tabindex="-1"
+                :disabled="state.smsSendBtn"
+                @click.stop.prevent="getCaptcha"
+                v-text="
+                  (!state.smsSendBtn && '获取验证码') || state.time + ' s'
+                "
+              />
+            </a-col>
+          </a-row>
+        </a-tab-pane>
+      </a-tabs>
+
+      <!-- CheckBox -->
+      <a-form-item>
+        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]">
+          自动登录
+        </a-checkbox>
+        <router-link
+          :to="{ name: 'recover', params: { user: 'aaa' } }"
+          class="forge-password"
+          style="float: right;"
+        >
+          忘记密码
+        </router-link>
+      </a-form-item>
+
+      <a-form-item style="margin-top:24px">
+        <a-button
+          size="large"
+          type="primary"
+          htmlType="submit"
+          class="login-button"
+          :loading="state.loginBtn"
+          :disabled="state.loginBtn"
+        >
+          确定
+        </a-button>
+      </a-form-item>
+
+      <div class="user-login-other">
+        <span>其他登录方式</span>
+        <a>
+          <a-icon class="item-icon" type="alipay-circle"></a-icon>
+        </a>
+        <a>
+          <a-icon class="item-icon" type="taobao-circle"></a-icon>
+        </a>
+        <a>
+          <a-icon class="item-icon" type="weibo-circle"></a-icon>
+        </a>
+        <router-link class="register" :to="{ name: 'register' }">
+          注册账户
+        </router-link>
+      </div>
+    </a-form>
+  </a-card>
 </template>
 
 <script>

@@ -12,9 +12,7 @@
         </div>
       </div>
 
-      <a-card class="main">
-        <router-view />
-      </a-card>
+      <router-view />
 
       <div class="footer">
         <div class="links">

@@ -20,7 +20,9 @@ import {
   Row,
   Col,
   Tabs,
-  Checkbox
+  Checkbox,
+  Popover,
+  Progress
 } from "ant-design-vue";
 
 Vue.config.productionTip = false;
@@ -42,6 +44,8 @@ Vue.use(DatePicker);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Tabs);
+Vue.use(Popover);
+Vue.use(Progress);
 Vue.use(Checkbox);
 
 new Vue({
