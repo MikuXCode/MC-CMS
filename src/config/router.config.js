@@ -26,7 +26,8 @@ export const constantRouterMap = [
   {
     path: "/",
     component: () =>
-      import(/* webpackChunkName: "layout" */ "@/layouts/BasicLayout")
+      import(/* webpackChunkName: "layout" */ "@/layouts/BasicLayout"),
+    children: []
   },
   {
     path: "/403",
