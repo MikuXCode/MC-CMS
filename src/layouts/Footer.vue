@@ -1,5 +1,8 @@
 <template>
-  <div>Footer</div>
+  <div class="copyright">
+    Copyright
+    <a-icon type="copyright" /> 2020 <span>MikuCode</span>
+  </div>
 </template>
 
 <script>

@@ -22,7 +22,8 @@ import {
   Tabs,
   Checkbox,
   Popover,
-  Progress
+  Progress,
+  Breadcrumb
 } from "ant-design-vue";
 
 Vue.config.productionTip = false;
@@ -47,6 +48,7 @@ Vue.use(Tabs);
 Vue.use(Popover);
 Vue.use(Progress);
 Vue.use(Checkbox);
+Vue.use(Breadcrumb);
 
 new Vue({
   router,
